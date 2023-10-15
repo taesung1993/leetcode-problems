@@ -12,7 +12,7 @@ const productExceptSelf = function(nums) {
         left *= nums[i];
     }
 
-    for(let i=nums.length-1; i>=0; i--) {
+    for(let i=nums.length - 1; i>=0; i--) {
         answer[i] *= right;
         right *= nums[i];
     }
