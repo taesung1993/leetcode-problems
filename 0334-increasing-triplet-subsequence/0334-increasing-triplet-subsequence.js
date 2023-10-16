@@ -7,17 +7,17 @@ const increasingTriplet = function(nums) {
 
     for(let i=1; i<nums.length; i++) {
         const num = nums[i];
-        let isInsert = false;
+        let isInserted = false;
 
         for(let j=0; j<dp.length; j++) {
             if(num <= dp[j]) {
                 dp[j] = num;
-                isInsert = true;
+                isInserted = true;
                 break;
             }
         }
 
-        if(!isInsert) {
+        if(!isInserted) {
             dp.push(num);
         }
 
