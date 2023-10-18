@@ -3,34 +3,27 @@
  * @return {number}
  */
 const compress = function(chars) {
-  const copied = [...chars];
-  const length = copied.length;
-  let prev = copied[0];
-  let count = 1;
-  
-  for(let i=1; i<copied.length; i++) {
-    const current = copied[i];
+    let i = 0;
+    let index = 0;
 
-    if(prev === current) {
-      count += 1;
-    } else {
-      if(count > 1) {
-        chars.push(prev, ...count.toString().split(''));
-      } else {
-        chars.push(prev);
-      }
+    while(i < chars.length) {
+        let j = i;
 
-      count = 1;
+        while(j < chars.length && chars[j] === chars[i]) {
+            j++;
+        }
+
+        chars[index++] = chars[i];
+
+        if(j - i > 1) {
+            const count = j - i + '';
+            for(let k=0; k<count.length; k++) {
+                chars[index++] = count[k];
+            }
+        }
+
+        i = j;
     }
-    prev = current;
-  }
 
-  if(count > 1) {
-    chars.push(prev, ...count.toString().split(''));
-  } else {
-    chars.push(prev);
-  }
-  chars.splice(0, length);
-
-  return chars.length;
+    return index;
 };
