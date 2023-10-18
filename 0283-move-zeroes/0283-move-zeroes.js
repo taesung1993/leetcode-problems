@@ -8,7 +8,7 @@ const moveZeroes = function(nums) {
     for(let i=0; i<nums.length; i++) {
         const num = nums[i];
 
-        if(num !== 0) {
+        if(nums[i] !== 0) {
             [nums[zero], nums[i]] = [nums[i], nums[zero]];
             zero++;
         }
