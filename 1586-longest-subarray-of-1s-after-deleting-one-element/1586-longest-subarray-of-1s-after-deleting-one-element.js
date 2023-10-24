@@ -13,14 +13,15 @@ const longestSubarray = function(nums) {
             zeroCount++;
         }
 
-        while(zeroCount === 2) {
+        while(zeroCount > 1) {
             if(nums[start] === 0) {
                 zeroCount--;
             }
             start++;
         }
 
-        max = Math.max(max, end - start);
+        const distance = end - start;
+        max = Math.max(max, distance);
         end++;
     }
 
