@@ -11,12 +11,7 @@ const uniqueOccurrences = function(arr) {
 
     for(let i=0; i<arr.length; i++) {
         const num = arr[i];
-
-        if(hash.has(num)) {
-            hash.set(num, hash.get(num) + 1);
-        } else {
-            hash.set(num, 1);
-        }
+        hash.set(num, hash.get(num) + 1 || 1);
     }
 
     const values = Array.from(hash.values());
