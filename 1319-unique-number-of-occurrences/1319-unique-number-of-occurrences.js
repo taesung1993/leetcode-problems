@@ -3,10 +3,6 @@
  * @return {boolean}
  */
 const uniqueOccurrences = function(arr) {
-    if(arr.length === 1) {
-        return true;
-    }
-
     const hash = new Map();
 
     for(let i=0; i<arr.length; i++) {
@@ -15,6 +11,7 @@ const uniqueOccurrences = function(arr) {
     }
 
     const values = Array.from(hash.values());
-
-    return values.length === Array.from(new Set(values)).length;
+    const set = new Set(values);
+    
+    return values.length === set.size;
 };
