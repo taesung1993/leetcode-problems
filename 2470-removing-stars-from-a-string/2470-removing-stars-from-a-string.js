@@ -4,7 +4,7 @@
  */
 const removeStars = function(s) {
     const stack = [];
-
+    
     for(let i=0; i<s.length; i++) {
         const char = s[i];
 
