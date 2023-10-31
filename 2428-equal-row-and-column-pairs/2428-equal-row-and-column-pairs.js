@@ -3,29 +3,24 @@
  * @return {number}
  */
 const equalPairs = function(grid) {
-    const columns = new Map();
-    let count = 0;
+    const hash = new Map();
+    let answer = 0;
 
-
-    for(let i=0; i<grid.length; i++) {
+    for(let i=0; i<grid[0].length; i++) {
         const column = [];
-
-        for(let j=0; j<grid[i].length; j++) {
+        for(let j=0; j<grid.length; j++) {
             column.push(grid[j][i]);
         }
-
         const key = JSON.stringify(column);
-
-        columns.set(key, columns.get(key) + 1 || 1);
+        hash.set(key, hash.get(key) + 1 || 1);
     }
 
     for(let i=0; i<grid.length; i++) {
-        const row = JSON.stringify(grid[i]);
-
-        if(columns.has(row)) {
-            count += columns.get(row);
+        const key = JSON.stringify(grid[i]);
+        if(hash.has(key)) {
+            answer += hash.get(key);
         }
     }
 
-    return count;
+    return answer;
 };
