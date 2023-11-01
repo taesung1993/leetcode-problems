@@ -10,6 +10,10 @@
  * @return {ListNode}
  */
 const deleteMiddle = function(head) {
+    if(!head.next) {
+        return null;
+    }
+
     const map = new Map();
     let length = 0;
     let node = head;
@@ -18,10 +22,6 @@ const deleteMiddle = function(head) {
         map.set(length, node);
         node = node.next;
         length++;
-    }
-
-    if(length === 1) {
-        return null;
     }
 
     const mid = Math.floor(length / 2) - 1;
