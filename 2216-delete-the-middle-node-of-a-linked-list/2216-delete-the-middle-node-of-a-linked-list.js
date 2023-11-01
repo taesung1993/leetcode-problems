@@ -14,20 +14,15 @@ const deleteMiddle = function(head) {
         return null;
     }
 
-    const map = new Map();
-    let length = 0;
-    let node = head;
+    let slow = head;
+    let fast = head;
 
-    while(node !== null) {
-        map.set(length, node);
-        node = node.next;
-        length++;
+    while(fast.next && fast.next.next && fast.next.next.next) {
+        slow = slow.next;
+        fast = fast.next.next;
     }
 
-    const mid = Math.floor(length / 2) - 1;
-
-    node = map.get(mid);
-    node.next = node?.next?.next;
+    slow.next = slow.next.next;
 
     return head;
 };
