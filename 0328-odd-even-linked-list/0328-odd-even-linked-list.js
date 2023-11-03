@@ -14,39 +14,18 @@ const oddEvenList = function(head) {
         return null;
     }
 
-    let node = head;
+    let odd = head;
+    let even = head.next;
+    let evenHead = even;
 
-    let primaryRoot = null;
-    let primary = primaryRoot;
-    
-    let secondaryRoot = null;
-    let secondary = secondaryRoot;
-
-    let index = 0;
-
-    while(node) {
-        if(index % 2 === 0) {
-            if(primary) {
-                primary.next = new ListNode(node.val);
-                primary = primary.next;
-            } else {
-                primaryRoot = new ListNode(node.val);
-                primary = primaryRoot;
-            }
-        } else {
-            if(secondary) {
-                secondary.next = new ListNode(node.val);
-                secondary = secondary.next;
-            } else {
-                secondaryRoot = new ListNode(node.val);
-                secondary = secondaryRoot;
-            }
-        }
-        node = node.next;
-        index++;
+    while(even && even.next) {
+        odd.next = odd.next.next;
+        even.next = even.next.next;
+        odd = odd.next;
+        even = even.next;
     }
 
-    primary.next = secondaryRoot;
+    odd.next = evenHead;
 
-    return primaryRoot;
+    return head;
 };
