@@ -10,22 +10,21 @@
  * @return {number}
  */
 const pairSum = function(head) {
+    const list = [];
     let node = head;
     let size = 0;
-    const values = [];
-
+    let max = 0;
+    
     while(node) {
-        values.push(node.val);
+        list.push(node.val);
         node = node.next;
         size++;
     }
 
     const limit = Math.floor(size / 2);
-    const length = size - 1;
-    let max = 0;
 
     for(let i=0; i<limit; i++) {
-        max = Math.max(max, values[i] + values[length-i]);
+        max = Math.max(max, list[i] + list[size - i - 1]);
     }
 
     return max;
