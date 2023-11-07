@@ -16,16 +16,18 @@ const oddEvenList = function(head) {
 
     let odd = head;
     let even = head.next;
+    let oddHead = odd;
     let evenHead = even;
 
     while(even && even.next) {
         odd.next = odd.next.next;
-        even.next = even.next.next;
         odd = odd.next;
+
+        even.next = even.next.next;
         even = even.next;
     }
 
     odd.next = evenHead;
 
-    return head;
+    return oddHead;
 };
