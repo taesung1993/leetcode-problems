@@ -11,15 +11,15 @@
  */
 const reverseList = function(head) {
     let node = head;
-    let prevNode = null;
-    let currentNode = null;
+    let prev = null;
+    let current = null;
 
     while(node) {
-        currentNode = new ListNode(node.val);
-        currentNode.next = prevNode;
-        prevNode = currentNode;
+        current = new ListNode(node.val);
+        current.next = prev;
         node = node.next;
-    } 
+        prev = current;
+    }
 
-    return currentNode;
+    return current;
 };
