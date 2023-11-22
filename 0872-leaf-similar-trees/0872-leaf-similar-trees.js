@@ -13,23 +13,30 @@
  */
 const leafSimilar = function(root1, root2) {
     const dfs = (node, output) => {
-        if(!node) return;
+        if(!node) {
+            return output;
+        }
 
         if(!node.left && !node.right) {
             output.push(node.val);
-            return;
+            return output;
         }
 
-        if(node.left) dfs(node.left, output);
+        if(node.left) {
+            dfs(node.left, output);
+        }
 
-        if(node.right) dfs(node.right, output);
+        if(node.right) {
+            dfs(node.right, output);
+        }
+
+        return output;
     }
 
-    const output1 = [];
-    const output2 = [];
+    const output1 = dfs(root1, []);
+    const output2 = dfs(root2, []);
 
-    dfs(root1, output1);
-    dfs(root2, output2);
+    const answer = JSON.stringify(output1) === JSON.stringify(output2);
 
-    return output1.length === output2.length && output1.every((val, index) => val === output2[index]);
+    return answer;
 };
