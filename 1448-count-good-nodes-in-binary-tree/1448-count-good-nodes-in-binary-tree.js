@@ -13,13 +13,13 @@
 const goodNodes = function(root) {
     let count = 0;
 
-    const dfs = (node, upperBound = -Infinity) => {
+    const dfs = (node, upperBound=-Infinity) => {
         if(!node) {
             return;
         }
 
         if(node.val >= upperBound) {
-            count++;
+            count += 1;
         }
 
         const max = Math.max(node.val, upperBound);
