@@ -11,29 +11,28 @@
  * @return {number[]}
  */
 const rightSideView = function(root) {
-    const dfs = (node, depth, map) => {
-        if(!node) {
-            return map;
+    const queue = root ? [root] : [];
+    const result = [];
+
+    while(queue.length > 0) {
+        const size = queue.length;
+        
+        for(let i=0; i<size; i++) {
+            const node = queue.shift();
+            
+            if(i === size - 1) { 
+                result.push(node.val);
+            }
+
+            if(node.left) {
+                queue.push(node.left);
+            }
+
+            if(node.right) {
+                queue.push(node.right);
+            }
         }
-
-        if(map.has(depth)) {
-            map.set(depth, [...map.get(depth), node.val]);
-        } else {
-            map.set(depth, [node.val]);
-        }
-
-        if(!node.left && !node.right) {
-            return map;
-        }
-
-        dfs(node.left, depth + 1, map);
-        dfs(node.right, depth + 1, map);
-
-        return map;
     }
 
-    const map = dfs(root, 0, new Map());
-    const values =  Array.from(map.values());
-    const answer = values.length > 0 ? values.map((el) => el.slice(-1)[0]) : [];
-    return answer;
+    return result;
 };
