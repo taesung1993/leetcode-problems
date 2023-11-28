@@ -15,12 +15,12 @@ const rightSideView = function(root) {
     const result = [];
 
     while(queue.length > 0) {
-        const size = queue.length;
-        
-        for(let i=0; i<size; i++) {
+        const queueSize = queue.length;
+
+        for(let i=0; i<queueSize; i++) {
             const node = queue.shift();
-            
-            if(i === size - 1) { 
+
+            if(i === queueSize - 1) {
                 result.push(node.val);
             }
 
