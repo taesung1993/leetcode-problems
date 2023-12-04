@@ -12,18 +12,19 @@
  */
 const maxLevelSum = function(root) {
     const queue = root ? [root] : [];
-    let level = 0;
-    const sums = [];
+    let level = 1;
+    let maxSum = root.val;
+    let answer = 1;
     
     while(queue.length > 0) {
         const size = queue.length;
+        let sum = 0;
         
         for(let i=0; i<size; i++) {
             const node = queue.shift();
             
-            sums[level] = (sums[level] ?? 0) + node.val;
-            
-            
+            sum += node.val
+             
             if(node.left) {
                 queue.push(node.left);
             }
@@ -32,12 +33,14 @@ const maxLevelSum = function(root) {
                 queue.push(node.right);
             }
         }
+
+        if(sum > maxSum) {
+            maxSum = sum;
+            answer = level;
+        }
         
         level++;
     }
-    
-    const max = Math.max(...sums);
-    const answer = sums.findIndex((sum) => sum === max);
-    
-    return answer + 1;
+
+    return answer;
 };
