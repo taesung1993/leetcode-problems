@@ -4,28 +4,27 @@
  */
 const orangesRotting = function(grid) {
     let freshOrangeCount = 0;
-    const queue = grid.reduce((r, row, ridx) => {
-        r.push(...row.reduce((r, cell, cidx) => {
-            if(cell === 1) {
-                freshOrangeCount += 1;
+    const queue = grid.reduce((result, row, rowIndex) => {
+        result.push(...(row.reduce((result, cell, cellIndex) => {
+            switch(cell) {
+                case 1:
+                    freshOrangeCount += 1;
+                    break;
+                case 2:
+                    result.push([rowIndex, cellIndex, 0]);
+                    break;
             }
 
-            if(cell === 2) {
-                r.push([ridx, cidx, 0]);
-            }
-            
-            return r;
-        }, []));
-        
-        return r;
+            return result;
+        }, [])))
+
+        return result;
     }, []);
-    const limit = {
-        row: grid.length,
-        col: grid[0].length
+    const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    const isRange = {
+        row: (value) => value >= 0 && value < grid.length,
+        col: (value) => value >= 0 && value < grid[0].length
     }
-
-    const directions = [[0,1], [0,-1], [1,0], [-1,0]];
-    const visited = new Set();
     let answer = 0;
 
     while(queue.length > 0) {
@@ -34,13 +33,13 @@ const orangesRotting = function(grid) {
         for(const [dr, dc] of directions) {
             const nextRow = currentRow + dr;
             const nextCol = currentCol + dc;
-            const key = JSON.stringify([nextRow, nextCol]);
 
-            if(nextRow >= 0 && nextRow < limit.row && nextCol >=0 && nextCol < limit.col && !visited.has(key) && grid[nextRow][nextCol] === 1) {
-                grid[nextRow][nextCol] = 2;
+            if(
+                isRange.row(nextRow) && isRange.col(nextCol) && grid[nextRow][nextCol] === 1
+            ) {
                 freshOrangeCount -= 1;
+                grid[nextRow][nextCol] = 2;
                 queue.push([nextRow, nextCol, currentMinute + 1]);
-                visited.add(key);
             }
         }
 
