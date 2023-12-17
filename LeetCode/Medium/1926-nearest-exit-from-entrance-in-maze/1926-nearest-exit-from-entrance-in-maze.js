@@ -4,49 +4,49 @@
  * @return {number}
  */
 const nearestExit = function(maze, entrance) {
-  const queue = [[...entrance, 0]];
-  const directions = [
-    [0, -1],
-    [0, 1],
-    [-1, 0],
-    [1, 0],
-  ]; // left, right, top, bottom
-  const limits = {
-    row: maze.length,
-    col: maze[0].length,
-  };
-  const visited = new Set(JSON.stringify(entrance));
+    /**
+        1. entrance는 출구로 치지 않는다.
+        2. entrance에서 위, 아래, 왼쪽, 오른쪽으로 이동시킬 수 있다.
+        3. 출구는 maze의 모서리에 있는 모든 곳
 
-  while (queue.length > 0) {
-    const [currentRow, currentCol, steps] = queue.shift();
+        입구에서 출구까지가는 가장 지름길 경로의 step의 최솟값을 반환해라.
+        만약 step이 없는 경우 -1을 반환해라.
+     */
 
-    if (
-      (currentCol === 0 ||
-      currentCol === limits.col - 1 ||
-      currentRow === 0 ||
-      currentRow === limits.row - 1) && 
-      (currentRow !== entrance[0] || currentCol !== entrance[1])
-    ) {
-      return steps;
-    }
+     const queue = [[...entrance, 0]];
+     const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]; // 오른쪽, 왼쪽, 위쪽, 아래쪽
+     const visited = new Set();
+     const isRange = {
+        row: (value) => value >=0 && value < maze.length,
+        col: (value) => value >=0 && value < maze[0].length,
+     }
 
-    for (const [row, col] of directions) {
-      const nextRow = row + currentRow;
-      const nextCol = col + currentCol;
+     while(queue.length > 0) {
+         const [currentRow, currentCol, currentStep] = queue.shift();
 
-      if (
-        nextRow >= 0 &&
-        nextRow < limits.row &&
-        nextCol >= 0 &&
-        nextCol < limits.col &&
-        maze[nextRow][nextCol] === "." && 
-        !visited.has(JSON.stringify([nextRow, nextCol]))
-      ) {
-        visited.add(JSON.stringify([nextRow, nextCol]));
-        queue.push([nextRow, nextCol, steps + 1]);
-      }
-    }
-  }
+         if(
+             (currentRow !== entrance[0] || currentCol !== entrance[1]) &&
+             (currentRow === 0 || currentRow === maze.length -1 || currentCol === 0 || currentCol === maze[0].length - 1)
+         ) {
+             return currentStep;
+         }
 
-  return -1;
+         for(const [dr, dc] of directions) {
+             const nextRow = currentRow + dr;
+             const nextCol = currentCol + dc;
+             const visitingKey = JSON.stringify([nextRow, nextCol]);
+
+             if(
+                isRange.row(nextRow) &&
+                isRange.col(nextCol) &&
+                maze[nextRow][nextCol] === '.' &&
+                !visited.has(visitingKey)
+             ) {
+                 visited.add(visitingKey);
+                 queue.push([nextRow, nextCol, currentStep + 1]);
+             }
+         }
+     }
+
+     return -1;
 };
