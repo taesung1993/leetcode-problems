@@ -14,16 +14,14 @@
 const guessNumber = function(n) {
     let left = 1;
     let right = n;
-    let pivot = 0;
-    
     
     while(true) {
-        pivot = left + Math.floor((right - left) / 2);
+        const pivot = Math.floor((left + right) / 2);
         const guessValue = guess(pivot);
         
         if(guessValue === 0) {
-            break;
-        }
+            return pivot;
+        } 
         
         if(guessValue === 1) {
             left = pivot + 1;
@@ -33,6 +31,4 @@ const guessNumber = function(n) {
             right = pivot - 1;
         }
     }
-    
-    return pivot;
 };
